@@ -37,5 +37,15 @@ CPU 2개
 
 Rocky와 동일한 설정
 
+English 선택
+continue
 
+경고 표시(파티션 설치, 타임설정, 루트키 설정)를 완료
+++) 좌측 상단의 Done클릭
+    time and date
+우분투의 경우 user로 접속해서 루트키를 만들어야함
+
+Rocky의 경우 바로 root키를 만들 수 있음
+
+Allow root ssh login with password를 클릭하여 루트가 키를 가지고 ssh접속하는것을 허용
 
