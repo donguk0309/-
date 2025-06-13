@@ -49,3 +49,14 @@ Rocky의 경우 바로 root키를 만들 수 있음
 
 Allow root ssh login with password를 클릭하여 루트가 키를 가지고 ssh접속하는것을 허용
 
+begin install 클릭
+
+++) 가상머신을 guest, 로컬을 호스트라함
+
+++) 게스트와 호스트를 마우스 이동을 위해 ctrl + alt
+
+Web Sever -> http(80포트) / https(443포트)
+https를 사용하기 위해서는 인증서를 적용해야함
+http는 패킷이 암호화가 되지 않아 스니핑시 데이터가 노출된다
+telnet, ftp 또한 암호화가 되지 않는다
+
