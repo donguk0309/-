@@ -157,7 +157,31 @@ responds
 
 tcp : 배달부
 
+무언가를 설치할때,
 
+설치 관리프로그램 또는 소스코드를 컴파일 make등, 설치프로그램을 다운로드 총 3가지 기법
+
+dnf(Red Hat)설치 관리 프로그램
+apt-get(우분투)
+yum(centos)
+
+옛날에는 하나를 설치할때 관련도구를 설치해야함(호환성에 맞는)
+
+지금은 의존성 파일까지 버전에 맞게 자동설치 해줌
+
+레드햇 계열은 apache2 -> httpd로함
+
+dnf install -y php php-fpm mariadb-server로 설치
+
+설치된 패키지를 보려면 rpm -qa
+(red hat package mange)
+
+rpm -qa | grep httpd
+rpm -qa의 결과를 가져와서 grep으로 문자열 찾음
+
+httpd -v
+php -v
+mysql -V
 
 
 
