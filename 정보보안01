@@ -181,7 +181,31 @@ rpm -qa의 결과를 가져와서 grep으로 문자열 찾음
 
 httpd -v
 php -v
-mysql -V
+mysql -V (mariadb)
+
+서비스 제어(시작)
+systemctl start httpd
+systemctl enable httpd(재부팅시에도 자동실행)
+확인
+systemctl (시스템 컨트롤) status httpd
+
+원레는 systemctl사용시 /usr/lib/systemd/system/시스템 파일 이 존재해야함
+
+stop restart disable
+
+아직은 테스트 페이지만 있다.
+
+그러나 브라우저에서 서버에 접속이 안된다(방화벽에서 80포트의 트래픽을 모두 차단)
+
+허용시키기
+firewall-cmd --list-all (방화벽 정책확인)
+
+허용시 서비스 키워드이름 또는 포트로 허용가능
+
+firewall -cmd --permanent(영구적, 재부팅 시에도 방화벽 정책 유지) --add-service=http
+또는 --add-port=80/tcp (현재는 http 포트를 바꾸지 않았음)
+
+
 
 
 
