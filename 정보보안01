@@ -60,3 +60,8 @@ https를 사용하기 위해서는 인증서를 적용해야함
 http는 패킷이 암호화가 되지 않아 스니핑시 데이터가 노출된다
 telnet, ftp 또한 암호화가 되지 않는다
 
+ip 설정이 되지않아(공용실습실) putty로 원격접속은 불가
+
+ip address로 ip 확인시 ip없음이 뜸
+
+++)snapshot으로 백업후 virtualbox폴더내에 shapshot에서 복제가능
