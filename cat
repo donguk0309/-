@@ -1,0 +1,14 @@
+cat > filename.txt
+
+$ cat > hello.txt
+Hello World!
+This is a test.
+Ctrl+D
+@ 덮어쓰기
+
+cat >> filename.txt
+# 기존 파일에 추가
+
+echo "Hello Again" | cat >> filename.txt
+
+echo "Hello World" > hello.txt
