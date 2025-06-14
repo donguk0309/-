@@ -224,4 +224,11 @@ index.html등으로 시작함
 vi /var/www/html/index.html
 o키로 문서작성
 
+echo "안녕하세요" | sudo tee /var/www/html/index.html > /dev/null
+
+sudo chown apache:apache /var/www/html/index.html
+sudo chmod 644 /var/www/html/index.html
+
+ps aux | grep httpd
+
 
