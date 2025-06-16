@@ -246,4 +246,62 @@ ps aux | grep httpd
 
 mariadb는 관계형 db (RDBMS)라고 한다
 
+db내부에는 table이 존재하고 table내부에는 filed(column)이 존재한다
 
+
+mkdir /var/www/html/test
+cp /var/www/html/index.html /var/www/html/test/index.html
+
+웹 브라우저에서 /test/index.html에 접속
+
+=> 변함없음(단순 cp)
+
+cp /var/www/html/index.html /var/www/html/test/second.html
+
+vi /var/www/html/test/second.html
+
+ls /var/log
+
+ls /var/log/httpd
+cat /var/log/httpd/access_log
+
+systemctl start mariadb를 한뒤에 
+
+mysql_secure_installation mysql # 보안설치 작업
+root 비밀번호 입력후 db 비밀번호 설정
+y or n으로 질의응답
+
+mysql -u root -p 접속
+
+none이라고 뜨는 이유는 아직 어떠한 db도 만들지 않았기 때문이다
+
+현재 데이터베이스의 목록을 보기위한 명령어
+
+show databases;
+
+기본적으로 3개의 데이터베이스가 생성됨
+
+information_schema(db의 구조를 담은 데이터베이스로 취약점 방어가 중요)
+
+create database test;
+
+삭제시 
+drop database test;
+
+db접속시 use School;
+==> none이 School로 바뀜
+
+create table Student; ==> error 가 뜬다 (하나의 테이블에는 최소 하나의 칼럼(필드)이 존재해야함)
+
+필드를 만들때는 자료형을 옆에 적어준다
+
+create table Student ( Name varchar(8), Date int(4), Phone int(9) );
+
+
+sql == 구조화된 질의 언어
+질의를 통해 요청을 보내고 이를 통해 db와 상호작용
+
+show tables;
+
+desc Student; # 칼럼명 보기
+select * from Student;
