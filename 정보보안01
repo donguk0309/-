@@ -345,3 +345,20 @@ delete from Student;
 
 drop table student;
 
+
+ftp(file transfer protocol) -파일 전송 규약
+
+20(전송채널) / 21(제어 채널)
+
+전송방식 - Active / Passive
+Active : 기본적인 방식
+
+21번으로 접속이 잘 안될때
+
+외부에서 ftp로 들어올때 다른 보안 솔루션으로 인해 접속이 잘안될 때
+
+Passive 포트 (1024~)
+
+서버는 정상적인데 접속이 잘안될 때 Passive 모드로 바꿔서 이용
+
+데이터 암호화를 위해서는 sftp, ftps를 사용
