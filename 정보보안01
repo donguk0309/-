@@ -319,3 +319,21 @@ alter table Student add Age1 int(3) first;
 alter table Student modify(수정) Name varchar(8) first;
 
 계속 입력하고 싶으면 ;을 마지막에 붙인다 그리고 적용하려면 ;, 취소하려면 \c이다
+
+이름과 데이터형 타입이 잘못됬을때
+
+alter table Studnet change Age3 Age4 int(6);
+
+
+insert into Student values ( '김동욱', 29, 2024, 56640423, 'Seoul' );
+# 필드에 데이터 추가
+
+요소를 모르는게 있을때
+insert into Student ( Name, Age, Address) values ( 'HONG', 24, 'Seoul' );
+나머지 요소는 NULL (값이 비어있음)
+
+Date필드의 모든 데이터를 2025로 수정하는 법
+
+update Student set Date = 2025;
+-----------------------------------
+update Student set Age = 33 where Name = 'HONG'
