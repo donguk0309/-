@@ -337,3 +337,11 @@ Date필드의 모든 데이터를 2025로 수정하는 법
 update Student set Date = 2025;
 -----------------------------------
 update Student set Age = 33 where Name = 'HONG'
+update Student set Date = 2024, Phone = 87654321 where Name = 'HONG'
+
+delete from Student where Phone = 56640423;
+
+delete from Student;
+
+drop table student;
+
