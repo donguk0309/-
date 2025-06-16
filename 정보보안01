@@ -305,3 +305,17 @@ show tables;
 
 desc Student; # 칼럼명 보기
 select * from Student;
+
+칼럼 추가
+
+alter table Student add Address varchar(10);
+
+alter table Student add Age int(3);를 하게되면 Age가 마지막 필드로 추가됨
+
+alter table Student add Age int(3) after Name; Name 필드 아래에 추가
+
+alter table Student add Age1 int(3) first;
+
+alter table Student modify(수정) Name varchar(8) first;
+
+계속 입력하고 싶으면 ;을 마지막에 붙인다 그리고 적용하려면 ;, 취소하려면 \c이다
