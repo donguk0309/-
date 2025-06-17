@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Step 1: 네임스페이스 및 veth 생성
+ip netns add ns_fake_target
+ip link add veth0 type veth peer name veth1
+ip link set veth1 netns ns_fake_target
+
+# Step 2: IP 설정
+ip addr add 10.200.1.1/24 dev veth0
+ip link set veth0 up
+ip netns exec ns_fake_target ip addr add 192.168.1.10/24 dev veth1
+ip netns exec ns_fake_target ip link set veth1 up
+ip netns exec ns_fake_target ip link set lo up
+
+# Step 3: mysql 설치 및 실행은 수동 또는 chroot 환경에서 수행
+
+
+
+
+
+
+#!/bin/bash
+
+# 네임스페이스 이름
+NS_NAME="ns_fake_target"
+VETH_MAIN="veth0"
+VETH_NS="veth1"
+NS_IP="192.168.1.10"
+MAIN_IP="10.200.1.1"
+SUBNET="24"
+
+echo "[*] 1. 네임스페이스 및 가상 인터페이스 생성"
+sudo ip netns add $NS_NAME
+sudo ip link add $VETH_MAIN type veth peer name $VETH_NS
+sudo ip link set $VETH_NS netns $NS_NAME
+
+echo "[*] 2. 메인 네임스페이스에서 인터페이스 설정"
+sudo ip addr add ${MAIN_IP}/${SUBNET} dev $VETH_MAIN
+sudo ip link set $VETH_MAIN up
+
+echo "[*] 3. 네임스페이스 내부 인터페이스 설정"
+sudo ip netns exec $NS_NAME ip addr add ${NS_IP}/${SUBNET} dev $VETH_NS
+sudo ip netns exec $NS_NAME ip link set $VETH_NS up
+sudo ip netns exec $NS_NAME ip link set lo up
+
+echo "[*] 4. 필요한 패키지 설치 (mysql-server 등)"
+sudo ip netns exec $NS_NAME apt update
+sudo ip netns exec $NS_NAME apt install -y mysql-server
+
+echo "[*] 5. MySQL 안전모드로 실행 중 (비밀번호 우회)"
+sudo ip netns exec $NS_NAME bash -c "mysqld_safe --skip-grant-tables &"
+sleep 10  # MySQL이 완전히 뜰 때까지 대기
+
+echo "[*] 6. MySQL 접속 테스트 (패스워드 없이 루트 접속)"
+sudo ip netns exec $NS_NAME mysql -u root -e "SHOW DATABASES;"
+
+echo "[✓] 완료: $NS_NAME 네임스페이스 내에 MySQL 안전모드로 실행됨"
+
