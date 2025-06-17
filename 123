@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# ✅ 환경 변수 설정
+NS_NAME="ns_google"
+MAIN_IP="10.200.1.1"
+NS_IP="192.168.1.100"
+SUBNET="24"
+
+echo "[+] 네임스페이스 및 가상 인터페이스 설정 중..."
+
+# 1. 네임스페이스 생성
+sudo ip netns add $NS_NAME
+
+# 2. veth 인터페이스 생성 및 연결
+sudo ip link add veth0 type veth peer name veth1
+sudo ip link set veth1 netns $NS_NAME
+
+# 3. 메인 네임스페이스 설정
+sudo ip addr add ${MAIN_IP}/${SUBNET} dev veth0
+sudo ip link set veth0 up
+
+# 4. 네임스페이스 내부 설정
+sudo ip netns exec $NS_NAME ip addr add ${NS_IP}/${SUBNET} dev veth1
+sudo ip netns exec $NS_NAME ip link set veth1 up
+sudo ip netns exec $NS_NAME ip link set lo up
+
+# 5. 네임스페이스 내에 필요한 패키지 설치
+echo "[+] ns_google 내부에 mysql 설치 중..."
+sudo ip netns exec $NS_NAME apt update -y
+sudo ip netns exec $NS_NAME apt install -y mysql-server > /dev/null
+
+# 6. MySQL 안전모드 실행 (skip grant tables)
+echo "[+] MySQL 안전모드로 시작 중 (비밀번호 우회)..."
+sudo ip netns exec $NS_NAME bash -c "mysqld_safe --skip-grant-tables &"
+sleep 10
+
+# 7. MySQL 루트 접속 테스트 및 사용자 확인
+echo "[+] MySQL 루트 계정으로 무비밀번호 접속 중..."
+sudo ip netns exec $NS_NAME mysql -u root -e "SHOW DATABASES;"
+sudo ip netns exec $NS_NAME mysql -u root -e "SELECT user, host FROM mysql.user;"
+
+echo "[+] 🎉 완료: 모의 해킹 환경 구성 성공"
